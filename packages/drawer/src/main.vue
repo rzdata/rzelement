@@ -31,10 +31,12 @@
             <button
               :aria-label="`close ${title || 'drawer'}`"
               class="el-drawer__close-btn"
+                style="width: 70px;"
               type="button"
               v-if="showClose"
               @click="closeDrawer">
-              <i class="el-dialog__close el-icon el-icon-close"></i>
+               <el-button >关闭</el-button>
+              <!-- <i class="el-dialog__close el-icon el-icon-close"></i> -->
             </button>
           </header>
           <section class="el-drawer__body" v-if="rendered">
