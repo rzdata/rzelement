@@ -2,41 +2,57 @@
   <transition
     name="el-drawer-fade"
     @after-enter="afterEnter"
-    @after-leave="afterLeave">
-    <div
-      class="el-drawer__wrapper"
-      tabindex="-1"
-      v-show="visible">
+    @after-leave="afterLeave"
+  >
+    <div class="el-drawer__wrapper" tabindex="-1" v-show="visible">
       <div
         class="el-drawer__container"
         :class="visible && 'el-drawer__open'"
         @click.self="handleWrapperClick"
         role="document"
-        tabindex="-1">
+        tabindex="-1"
+      >
         <div
           aria-modal="true"
           aria-labelledby="el-drawer__title"
           :aria-label="title"
           class="el-drawer"
           :class="[direction, customClass]"
-          :style="isHorizontal ? `width: ${drawerSize}` : `height: ${drawerSize}`"
+          :style="
+            isHorizontal ? `width: ${drawerSize}` : `height: ${drawerSize}`
+          "
           ref="drawer"
           role="dialog"
           tabindex="-1"
+        >
+          <header
+            class="el-drawer__header"
+            id="el-drawer__title"
+            v-if="withHeader"
           >
-          <header class="el-drawer__header" id="el-drawer__title" v-if="withHeader">
             <slot name="title">
               <span role="heading" :title="title">{{ title }}</span>
             </slot>
             <button
+              v-show="closeStyle == 'icon'"
               :aria-label="`close ${title || 'drawer'}`"
               class="el-drawer__close-btn"
-                style="width: 70px;"
               type="button"
               v-if="showClose"
-              @click="closeDrawer">
-               <el-button >关闭</el-button>
-              <!-- <i class="el-dialog__close el-icon el-icon-close"></i> -->
+              @click="closeDrawer"
+            >
+              <i class="el-dialog__close el-icon el-icon-close"></i>
+            </button>
+            <button
+              v-show="closeStyle == 'button'"
+              :aria-label="`close ${title || 'drawer'}`"
+              class="el-drawer__close-btn"
+              style="width: 70px;"
+              type="button"
+              v-if="showClose"
+              @click="closeDrawer"
+            >
+              <el-button>关闭</el-button>
             </button>
           </header>
           <section class="el-drawer__body" v-if="rendered">
@@ -84,6 +100,13 @@ export default {
       default: 'rtl',
       validator(val) {
         return ['ltr', 'rtl', 'ttb', 'btt'].indexOf(val) !== -1;
+      }
+    },
+    closeStyle: {
+      type: String,
+      default: 'icon',
+      validator(val) {
+        return ['icon', 'button'].indexOf(val) !== -1;
       }
     },
     modalAppendToBody: {

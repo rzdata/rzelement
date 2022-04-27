@@ -1,6 +1,6 @@
 {
   "name": "rzelement-ui",
-  "version": "1.0.0",
+  "version": "1.0.01",
   "description": "A Component Library for Vue.js.",
   "main": "lib/element-ui.common.js",
   "files": [
